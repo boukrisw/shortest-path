@@ -117,8 +117,16 @@
               "devServerTarget": "shortest-path:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
-  "defaultProject": "shortest-path"
+    }
+  },
+  "defaultProject": "shortest-path",
+  "cli": {
+    "analytics": "f5e256fb-930a-4584-97c4-baab9fff1065"
+  }
 }
