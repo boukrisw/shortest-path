@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ServiceService } from './service/service.service';
+import { AlgoBFSService } from './service/AlgoBFS/algo-bfs.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
   selectedY=-1;
 
 
-  constructor(public service: ServiceService) {
+  constructor(public service: ServiceService, public algoBFS : AlgoBFSService) {
   }
 
 
@@ -87,7 +88,8 @@ export class AppComponent {
     }
   }
   public setSpeed(s){
-    if(s=='Fast') this.service.speed = 500
+    if(s=='Fast') this.service.speed = 200
+    else if(s=='Average') this.service.speed = 500
     else if(s=='Slow') this.service.speed = 1000
   }
 
@@ -100,8 +102,12 @@ export class AppComponent {
   }
 
   Go(){
-    this.service.launchAlgo();
-  }
+    this.service.printInfo();
+    if(this.service.algo == 'Breadth First Search'){
+      this.algoBFS.solveBFS();
+    }else if(this.service.algo == 'Dijkstra\'s Algorithm'){
+      //this.Dijkstra();
+    }  }
 }
 
 export interface pair {

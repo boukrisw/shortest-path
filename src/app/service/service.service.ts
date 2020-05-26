@@ -3,53 +3,25 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServiceService {
-  Solution;
-  parcoursEnours :pair[]= [];
-  
+  public Solution;
+
   public algo = 'Dijkstra\'s Algorithm';
   public speed = 500;
-  public table = [['#','#','#','#','#','#','#','#','#','#','#','#','#','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ','$',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ','@',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ','.',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],
-           ['#','#','#','#','#','#','#','#','#','#','#','#','#','#']
-          ];
 
-          visited = [[false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          [false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-          ];
-
- prev = [[null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-       [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-      [null,null,null,null,null,null,null,null,null,null,null,null,null,null],
-      ];
+  //Pour animation de trajet en vert
+  public parcoursEnours :pair[]= [];
+  
+  //Le terrain
+  public table = [['#','#','#','#','#','#','#','#','#','#','#','#','#','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ','$',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ','@',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ','.',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'],['#','#','#','#','#','#','#','#','#','#','#','#','#','#']];
+  
+  //Pour reperer les case deja visite
+  public visited = [[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],];
+  
+  //pour stocker le prédécesseur d'une case
+  public prev = [[null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null],];
+    
 
   //Source
   public sourceX:number; 
@@ -60,7 +32,7 @@ export class ServiceService {
   //BoxPos
   public BoxX:number; 
   public BoxY:number;
-  //Directions
+  //Les Directions [Nord,East,Sud,Ouest]
   dx = [-1,0,1,0];
   dy = [0,1,0,-1];
   
@@ -95,75 +67,7 @@ export class ServiceService {
     console.log('end  :' , this.endX,' , ',this.endY);
   }
   
-  async launchAlgo(){
-      console.log("yes")
-      this.printInfo();
-
-
-      if(this.algo == 'Breadth First Search'){
-        this.solveBFS();
-      }else if(this.algo == 'Dijkstra\'s Algorithm'){
-        //this.Dijkstra();
-      }
-        
-  }
-  //  setTimeout(() => {}, this.speed*i);
-
-
-  /* --------- Breadth First Search Algorithm --------- */
-  
-
-  solveBFS(){
-    this.parcoursEnours=[];
-    this.visited = [[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],];
-    this.prev = [[null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null],];
-     
-    var queue :pair[]= []; //queue.push(2);  var i = queue.shift();
-
-    queue.push({x:this.sourceX,y:this.sourceY})
-    this.visited[this.sourceX][this.sourceY] = true;
-    
-    this.methode(queue);
-  }
-
-  methode(queue){
-    setTimeout(() => {
-      if(queue.length == 0 || this.visited[this.endX][this.endY] == true ){
-        //We do nothing!
-      }else{
-        let node = queue.shift();
-        let neighbours : pair[]= this.getNeigbours(node.x,node.y);
-        neighbours.forEach((next,ind) => {
-          if( this.visited[next.x][next.y] == false){
-            queue.push({x:next.x,y:next.y})
-                  this.prev[next.x][next.y]=node;
-                  this.visited[next.x][next.y] = true;
-                  //we found solution!
-                  if( this.table[next.x][next.y] == '.'){
-                    this.Solution = this.ConstructPath();
-                    this.Solution.map( 
-                      (e,i) => {
-                          setTimeout(() => {
-                            this.parcoursEnours.push(e)
-                            if(i>0){
-                              let l = this.Solution[i-1];
-                              if(this.table[l.x][l.y] == '@.')this.table[l.x][l.y]='.';
-                              else this.table[l.x][l.y]=' ';
-                              if(this.table[e.x][e.y] == '.')this.table[e.x][e.y]='@.';
-                              else this.table[e.x][e.y] ='@'
-                            }
-                          }, this.speed*i);
-                        }
-                    ); 
-                  }
-            }
-          }) 
-          this.methode(queue);
-      }
-    }, this.speed);
-  }
-
-  ConstructPath(){
+  ConstructPath() : pair[]{
     let path = [];
     for(let n:pair ={x:this.endX,y:this.endY} ; n!=null ; n =this.prev[n.x][n.y]){
       path.push(n);
@@ -176,6 +80,7 @@ export class ServiceService {
     }
     return [];
   }
+
   /* Get list Neighbours of (x,y)
                      (x-1,y)
                         |
@@ -185,7 +90,7 @@ export class ServiceService {
                         |
                      (x+1,y)
   */
-  getNeigbours(x:number,y:number): pair[]{
+  getNeigbours(x:number,y:number) : pair[]{
     let res:pair[]=[];
     
     for(let i=0;i<4;i++){
@@ -197,47 +102,12 @@ export class ServiceService {
     }
     return res;
   }
-/*
-  Dijkstra(){
-    console.log(this.AdjMatrix());
-  }
-
-  AdjMatrix() : number[][]{
-    let tab: number[][]=[];
-    for(let i=0;i<this.table[0].length*this.table.length-1;i++){
-      tab.push([]);
-    }
-    tab.map( (l,a) => {
-        for(let i=0;i<this.table[0].length*this.table.length-1;i++){
-          tab[a].push(0);
-        }
-      }   
-    );
-
-    this.table.map( (l,x) => {
-      l.map( (c,y) =>{
-        if(c!='#'){
-          for(let i=0;i<4;i++){
-            let tempX = x + this.dx[i];
-            let tempY = y + this.dy[i];
-            if(tempX>=0 && tempY>=0 && tempX<this.table.length && tempY<this.table[0].length && this.table[tempX][tempY]!='#'){
-              tab[x*this.table[0].length+y][tempX*this.table[0].length+tempY]=1;
-            }
-          }
-        }
-      } )  
-    })
-    
-    return tab;
-  }*/
-
-  
-  
 }
 
 export interface pair {
   x: number;
   y: number;
-
-
 }
+
+//  setTimeout(() => {}, this.speed*i);
+
