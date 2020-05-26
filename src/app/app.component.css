@@ -73,11 +73,3 @@ img{
   height: 50px;
 }
 
-.button {
-  outline:none;
-  padding:4px 0;
-  letter-spacing:.1em;
-  transition:all.5s ease;
-  
-}
-
