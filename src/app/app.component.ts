@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ServiceService } from './service/service.service';
 import { AlgoBFSService } from './service/AlgoBFS/algo-bfs.service';
+import { AlgoAStarService } from './service/AlgoAStar/algo-astar.service';
+
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,7 @@ export class AppComponent {
   selectedY=-1;
 
 
-  constructor(public service: ServiceService, public algoBFS : AlgoBFSService) {
+  constructor(public service: ServiceService, public algoBFS : AlgoBFSService,public algoASTAR : AlgoAStarService) {
   }
 
 
@@ -23,6 +25,7 @@ export class AppComponent {
     if(this.service.table[i][j] == ' '){
       res = 'Sol';
       const found = this.service.parcoursEnours.find(element => element.x==i && element.y==j);
+
       
       if(found != undefined){
         res+='Current';
@@ -71,6 +74,9 @@ export class AppComponent {
           }else if(this.service.table[i][j]=='.'){
             this.service.endX = i;
             this.service.endY = j;
+          }else if(this.service.table[i][j]=='$'){
+            this.service.BoxX = i;
+            this.service.BoxY = j;
           }
         } else{
           this.service.table[i][j] = '#';
@@ -82,7 +88,6 @@ export class AppComponent {
         this.selectedX=-1;
         this.selectedY =-1;
     }else {
-        
         this.selectedX=i;
         this.selectedY=j;
     }
@@ -107,7 +112,12 @@ export class AppComponent {
       this.algoBFS.solveBFS();
     }else if(this.service.algo == 'Dijkstra\'s Algorithm'){
       //this.Dijkstra();
-    }  }
+    }else if(this.service.algo == 'A* Search'){
+      this.algoASTAR.solveAStar();
+    }
+    
+    
+  }
 }
 
 export interface pair {

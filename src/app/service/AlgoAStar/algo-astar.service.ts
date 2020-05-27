@@ -4,53 +4,65 @@ import { ServiceService } from '../service.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AlgoBFSService {
+export class AlgoAStarService {
 
-  constructor(public service: ServiceService) {
-  }
-
-  /* --------- Breadth First Search Algorithm --------- */
-
-  solveBFS(){
+  constructor(public service: ServiceService) { }
+  /* --------- A* Algorithm --------- */
+  solveAStar(){
     this.service.parcoursEnours=[];
     this.service.visited = [[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false],];
     this.service.prev = [[null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null],];
      
-    var queue :pair[]= []; //queue.push(2);  var i = queue.shift();
+    var queue :node[]= [];
 
-    queue.push({x:this.service.sourceX,y:this.service.sourceY})
-    this.service.visited[this.service.sourceX][this.service.sourceY] = true;
-    
+    queue.push({x:this.service.sourceX,y:this.service.sourceY,cout:0,heuristique:0})
+
     this.methode(queue);
   }
 
-  methode(queue){
+  methode(queue:node[]){
     setTimeout(() => {
       if(queue.length == 0 || this.service.visited[this.service.endX][this.service.endY] == true){
         //We do nothing!
       }else{
-        let node = queue.shift();
-        let neighbours : pair[]= this.service.getNeigbours(node.x,node.y);
+        let current = this.lowestCost(queue);
+        queue = queue.filter(obj => obj !== current);
+        this.service.visited[current.x][current.y] = true;
+        
+        if(this.service.visited[this.service.endX][this.service.endY] == true){
+          return 
+        }
+
+ 
+        let neighbours : pair[]= this.service.getNeigbours(current.x,current.y);
         neighbours.forEach((next,ind) => {
           if( this.service.visited[next.x][next.y] == false){
-                  //if(next.x==this.service.BoxX && next.y==this.service.BoxY) this.service.changebox(node,next);
-                  queue.push({x:next.x,y:next.y})
-                  this.service.prev[next.x][next.y]=node;
-                  this.service.visited[next.x][next.y] = true;
+                  let nextNode:node = {x:next.x,y:next.y,cout:current.cout+1,heuristique:current.cout+this.distance(next)}
+                  queue.push(nextNode);
+                  if(this.service.prev[next.x][next.y]==null){
+                    this.service.prev[next.x][next.y]={x:current.x,y:current.y,cout:current.cout,heuristique:current.cout+this.distance(next)};
+                  }else{
+                    if(this.service.prev[next.x][next.y].heuristique>=current.cout+this.distance(next)){
+                      this.service.prev[next.x][next.y]={x:current.x,y:current.y,cout:current.cout,heuristique:current.cout+this.distance(next)};
+                    }
+                  }                      
                   //we found solution!
                   if(this.service.table[next.x][next.y] == '.'){
-                    this.service.Solution = this.service.ConstructPath();
-                    this.service.Solution.map( 
+                    let sol = this.service.ConstructPath();
+                    
+                    sol.map( 
                       (e,i) => {
                           setTimeout(() => {
                             this.service.parcoursEnours.push(e)
                             if(i>0){
-                              let l = this.service.Solution[i-1];
-                              this.service.move(l,e);
+                              let l = sol[i-1];
+                              this.service.move({x:l.x,y:l.y},{x:e.x,y:e.y});
                             }
                           }, this.service.speed*i);
                         }
                     ); 
+                    //console.log('pxhhiiiiw')
+                    //this.service.parcoursEnours.map(obj => console.log(obj.x,',',obj.y,' -> '))
                   }
             }
           }) 
@@ -58,8 +70,34 @@ export class AlgoBFSService {
       }
     }, this.service.speed);
   }
+
+
+  lowestCost(queue){
+      var min = queue[0];
+      for(let i=1;i<queue.length;i++){
+        if(min.heuristique >= queue[i].heuristique) min=queue[i];
+      }
+      return min;
+  }
+
+
+  compare2Nodes(n1:node, n2:node){
+       if(n1.heuristique < n2.heuristique) return 1;
+       else if(n1.heuristique  == n2.heuristique) return 0;
+       else return -1;
+  }
+
+  distance(v:pair){
+    return Math.abs(v.x-this.service.endX)+Math.abs(v.y-this.service.endY);
+  }
 }
 
+export interface node {
+  x: number;
+  y: number;
+  cout: number;
+  heuristique: number;
+}
 
 export interface pair {
   x: number;
