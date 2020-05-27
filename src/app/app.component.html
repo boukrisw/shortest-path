@@ -1,21 +1,12 @@
-<!-- Toolbar -->
-
 <div class="toolbar" role="banner">
-  <img
-    width="40"
-    type="image/png"
-    alt="Angular Logo"
-    src="../assets/resources/Images/P.png"
-  />
+  <img width="40" src="../assets/resources/Images/P.png" />
   <span>Welcome</span>
   <div class="spacer"></div>
 
   <div class="box">
     Algorithms:
-    <select>
-      <option (click)="setAlgo('Dijkstra\'s Algorithm')">Dijkstra's Algorithm</option>
-      <option (click)="setAlgo('A* Search')">A* Search</option>
-      <option (click)="setAlgo('Breadth First Search')">Breadth First Search</option>
+    <select (change)="changeAlgo($event)"> 
+      <option *ngFor="let algo of Algos">{{algo}}</option>
     </select>
   </div>
 
@@ -26,18 +17,15 @@
 
   <div class="box" >
     Speed:
-    <select ng-model="selectedCar">
-      <option (click)="setSpeed('Fast')">Fast</option>
-      <option (click)="setSpeed('Average')">Average</option>
-      <option (click)="setSpeed('Slow')">Slow</option>
+    <select (change)="changeSpeed($event)">
+      <option *ngFor="let speed of Speeds">{{speed}}</option>
     </select>
   </div>
-
-
   <div class="spacer"></div>
-  <a aria-label="Angular on twitter" target="_blank" rel="noopener" href="https://www.linkedin.com/in/walid-boukris-179771157/" title="LinkedIn">
-    <img width="40" type="image/png" alt="Angular Logo" src="../assets/resources/Images/linkedin.png">
-      </a>
+  
+  <a href="https://www.linkedin.com/in/walid-boukris-179771157/">
+    <img width="40" src="../assets/resources/Images/linkedin.png" title="linkedin">
+  </a>
 </div>
 
 <div class="message">
@@ -47,7 +35,7 @@
 <div class="line">
   <table cellpadding="0"  class="center" cellspacing="0">
     <tr  *ngFor="let l of service.table; let i = index">
-      <th style="background:url('../assets/resources/Images/Sol.png')"  *ngFor="let c of l; let j = index" (click)="click(i,j)">
+      <th style="background:url('../assets/resources/Images/Sol.png')" *ngFor="let c of l; let j = index" (click)="click(i,j)">
         <img class="image" src="{{getImg(i,j)}}">
       </th>
     </tr>

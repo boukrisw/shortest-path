@@ -10,11 +10,11 @@ import { AlgoAStarService } from './service/AlgoAStar/algo-astar.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  selectedCar;
+  public Algos: Array<string> = ["Dijkstra's Algorithm",  "A* Search"];
+  public Speeds: Array<string> = ["Fast",  "Average", "Slow"];
 
   selectedX=-1;
   selectedY=-1;
-
 
   constructor(public service: ServiceService, public algoBFS : AlgoBFSService,public algoASTAR : AlgoAStarService) {
   }
@@ -92,35 +92,23 @@ export class AppComponent {
         this.selectedY=j;
     }
   }
-  public setSpeed(s){
-    if(s=='Fast') this.service.speed = 200
-    else if(s=='Average') this.service.speed = 500
-    else if(s=='Slow') this.service.speed = 1000
-  }
-
-  public setAlgo(s){
-    this.service.algo = s;
-  }
-
-  canMove(i,j){
-    return this.service.table[i][j] == '@' || this.service.table[i][j] == '$' || this.service.table[i][j] == '.';
-  }
-
-  Go(){
+  
+ Go(){
     this.service.printInfo();
-    if(this.service.algo == 'Breadth First Search'){
+    if(this.service.algo == 'Dijkstra\'s Algorithm'){
       this.algoBFS.solveBFS();
-    }else if(this.service.algo == 'Dijkstra\'s Algorithm'){
-      //this.Dijkstra();
     }else if(this.service.algo == 'A* Search'){
       this.algoASTAR.solveAStar();
     }
-    
-    
   }
-}
 
-export interface pair {
-  x: number;
-  y: number;
+  changeAlgo(e) {
+    this.service.algo = e.target.value;
+  }
+
+  changeSpeed(e) {
+    if(e.target.value=='Fast') this.service.speed = 200
+    else if(e.target.value=='Average') this.service.speed = 500
+    else if(e.target.value=='Slow') this.service.speed = 1000  
+  }
 }
