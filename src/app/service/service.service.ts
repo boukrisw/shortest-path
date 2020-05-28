@@ -67,12 +67,12 @@ export class ServiceService {
     let a=0
     for(let n:pair ={x:this.endX,y:this.endY} ; n!=null ; n =this.prev[n.x][n.y]){
       a++;
-      console.log( n.x,' , ',n.x ,' => ');
+      //console.log( n.x,' , ',n.x ,' => ');
 
-      if(a==50) {
+      /*if(a==70) {
         path.reverse();
         return path;
-      }
+      }*/
       path.push(n);
     }
     path.reverse();

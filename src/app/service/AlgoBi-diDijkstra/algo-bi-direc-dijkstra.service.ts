@@ -53,7 +53,7 @@ export class AlgoBiDirecDijkstraService {
                       next = temp;
                     }
                     if(next!=null)this.service.prev[next.x][next.y] = inDep;
-                    console.log( 'Trouve dans dep');
+                    //console.log( 'Trouve dans dep');
                     let sol = this.service.ConstructPath();
                     /************************ */
                     /*Movement with animation */

@@ -16,6 +16,7 @@ export class AppComponent {
 
   selectedX=-1;
   selectedY=-1;
+  help=false;
 
   constructor(public service: ServiceService, public algoBFS : AlgoBFSService,public algoASTAR : AlgoAStarService,public algoBiBFS :AlgoBiDirecDijkstraService) {
   }
@@ -89,7 +90,7 @@ export class AppComponent {
   }
   
  Go(){
-    
+    this.removeHelp();
     this.selectedX=-1;
     this.selectedY=-1;
     //this.service.printInfo();
@@ -105,10 +106,12 @@ export class AppComponent {
   }
 
   changeAlgo(e) {
+    this.removeHelp();
     this.service.algo = e.target.value;
   }
 
   changeSpeed(e) {
+    this.removeHelp();
     if(e.target.value=='Fast') this.service.speed = 200
     else if(e.target.value=='Average') this.service.speed = 500
     else if(e.target.value=='Slow') this.service.speed = 1000  
@@ -120,5 +123,15 @@ export class AppComponent {
     }else {
       return this.service.algo + ' is weighted and guarantees the shortest path!';
     }
+  }
+  needHelp(){
+    this.help=true;
+  }
+
+  removeHelp(){
+    this.help=false;
+  }
+  getHelp(){
+    return this.help;
   }
 }

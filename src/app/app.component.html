@@ -22,23 +22,77 @@
   </div>
   <div class="spacer"></div>
   
+  <a (click)="needHelp()">
+    <img width="40" src="../assets/resources/Images/Help-icon.png" title="Need help">
+  </a>
   <a href="https://www.linkedin.com/in/walid-boukris-179771157/">
     <img width="40" src="../assets/resources/Images/linkedin.png" title="linkedin">
   </a>
 </div>
 
-<div class="message">
-  <b>{{getMessage()}}</b>
-</div>
-
-<div class="line">
-  <table cellpadding="0"  class="center" cellspacing="0">
-    <tr  *ngFor="let l of service.table; let i = index">
-      <th style="background:url('../assets/resources/Images/Sol.png')" *ngFor="let c of l; let j = index" (click)="click(i,j)">
-        <img class="image" src="{{getImg(i,j)}}">
+<div class="message" *ngIf="this.getHelp()">
+  <input (click)="removeHelp()" title="remove help" type="image" src="../assets/resources/Images/close.png">
+  <table cellpadding="10"  class="center" cellspacing="0">
+    <tr>
+      <th>
+        <img class="image" src="../assets/resources/Images/Pousseur.png">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/Mur.png">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/But.png">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/Sol.png">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/SolVisited.png">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/SolCurrent.png">
+      </th>
+    </tr>
+    <tr>
+      <th>Walid</th>
+      <th>Wall</th>
+      <th>Target</th>
+      <th>Unvisited</th>
+      <th>Visited</th>
+      <th>Shortest-path</th>
+    </tr>
+  </table>
+  
+  <table cellpadding="5"  class="center">
+    <tr>
+      <th>Possible modifications</th>
+    </tr>
+  </table>
+  <table cellpadding="50"  class="center">
+    <tr>
+      <th>
+        <img class="image" src="../assets/resources/Images/p.gif">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/m.gif">
+      </th>
+      <th>
+        <img class="image" src="../assets/resources/Images/b.gif">
       </th>
     </tr>
   </table>
 </div>
 
+  <div class="message">
+    <b>{{getMessage()}}</b>
+  </div>
 
+  <div class="line">
+    <table cellpadding="0"  class="center" cellspacing="0">
+      <tr  *ngFor="let l of service.table; let i = index">
+        <th style="background:url('../assets/resources/Images/Sol.png')" *ngFor="let c of l; let j = index" (click)="click(i,j)">
+          <img class="image" src="{{getImg(i,j)}}">
+        </th>
+      </tr>
+    </table>
+  </div>
