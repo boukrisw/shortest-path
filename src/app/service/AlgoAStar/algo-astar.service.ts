@@ -49,7 +49,6 @@ export class AlgoAStarService {
                   //we found solution!
                   if(this.service.table[next.x][next.y] == '.'){
                     let sol = this.service.ConstructPath();
-                    
                     sol.map( 
                       (e,i) => {
                           setTimeout(() => {

@@ -39,13 +39,13 @@ export class AlgoBFSService {
                   this.service.visited[next.x][next.y] = true;
                   //we found solution!
                   if(this.service.table[next.x][next.y] == '.'){
-                    this.service.Solution = this.service.ConstructPath();
-                    this.service.Solution.map( 
+                    let sol = this.service.ConstructPath();
+                    sol.map( 
                       (e,i) => {
                           setTimeout(() => {
                             this.service.parcoursEnours.push(e)
                             if(i>0){
-                              let l = this.service.Solution[i-1];
+                              let l = sol[i-1];
                               this.service.move(l,e);
                             }
                           }, this.service.speed*i);
